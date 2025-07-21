@@ -1,0 +1,27 @@
+replicaCount: 1
+
+image:
+  repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:039612884386:certificate/94d53ce9-70f3-4cc0-937d-e8df836b5244
+  hosts:
+    - host: sergeabroyan.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources: {}
