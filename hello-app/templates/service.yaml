@@ -1,11 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}
+  name: hello-app
+  labels:
+    app: hello-app
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
   selector:
-    app: {{ .Release.Name }}
+    app: hello-app

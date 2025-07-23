@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
-  tag: latest
+  tag: v2
   pullPolicy: IfNotPresent
 
 service:
@@ -11,17 +11,17 @@ service:
 
 ingress:
   enabled: true
-  className: alb
+  className: nginx
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:039612884386:certificate/94d53ce9-70f3-4cc0-937d-e8df836b5244
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
     - host: sergeabroyan.com
       paths:
         - path: /
           pathType: Prefix
-
-resources: {}
+  tls:
+    - hosts:
+        - sergeabroyan.com
+      secretName: tls-secret

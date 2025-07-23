@@ -5,11 +5,10 @@ module "eks" {
   version = "~> 20.31"
 
   cluster_name    = var.cluster_name
-  cluster_version = "1.33"
+  cluster_version = "1.29"
   subnet_ids      = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
 
-  enable_irsa = true
 
   # ✅ Correct public access setting
   cluster_endpoint_public_access           = true
