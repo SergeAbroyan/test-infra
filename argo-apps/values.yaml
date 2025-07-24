@@ -1,0 +1,11 @@
+argo:
+  namespace: argocd
+
+apps:
+  hello_app:
+    repoURL: https://github.com/SergeAbroyan/test-infra.git
+    path: hello-app
+    targetRevision: HEAD
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: default

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-app
+  namespace: {{ .Values.argo.namespace }}
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.apps.hello_app.repoURL }}
+    path: {{ .Values.apps.hello_app.path }}
+    targetRevision: {{ .Values.apps.hello_app.targetRevision }}
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    server: {{ .Values.apps.hello_app.destination.server }}
+    namespace: {{ .Values.apps.hello_app.destination.namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
