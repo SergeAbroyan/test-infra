@@ -22,14 +22,15 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: hello-app-config
-                  key: dbName
+                  key: DB_NAME
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: hello-app-secret
-                  key: dbUser
+                  key: DB_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: hello-app-secret
-                  key: dbPassword
+                  key: DB_PASSWORD
+
