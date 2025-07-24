@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello App</title>
+</head>
+
+<body>
+    <h1>Hello Hello</h1>
+    <button onclick="loadData()">Get Data from DB</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                document.getElementById('output').textContent = 'Error fetching data';
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+
+</html>

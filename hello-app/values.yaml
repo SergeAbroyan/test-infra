@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
-  tag: v5
+  tag: v6
   pullPolicy: IfNotPresent
 
 service:
@@ -29,3 +29,10 @@ ingress:
     - hosts:
         - sergeabroyan.com
       secretName: tls-secret
+
+db:
+  host: "postgres.default.svc.cluster.local"
+  port: "5432"
+  name: "hellodb"
+  user: "hellouser"
+  password: "hellopass"
