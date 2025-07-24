@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
-  tag: v4
+  tag: v5
   pullPolicy: IfNotPresent
 
 service:
