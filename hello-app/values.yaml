@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: ClusterIP
