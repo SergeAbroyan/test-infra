@@ -2,8 +2,12 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
+<<<<<<< HEAD
+  tag: v1
+=======
   tag: latest
-  pullPolicy: Always
+>>>>>>> parent of 65b44ee (Update values.yaml)
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -18,6 +22,8 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^(/.well-known/acme-challenge/.*)$ $1 break;
   hosts:
     - host: sergeabroyan.com
       paths:
@@ -29,7 +35,7 @@ ingress:
       secretName: tls-secret
 
 db:
-  host: my-postgresql.default.svc.cluster.local
+  host: "postgres.default.svc.cluster.local"
   port: "5432"
   name: "hellodb"
   user: "hellouser"
