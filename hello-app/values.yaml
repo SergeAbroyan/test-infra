@@ -2,11 +2,7 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
-<<<<<<< HEAD
-  tag: v1
-=======
   tag: latest
->>>>>>> parent of 65b44ee (Update values.yaml)
   pullPolicy: IfNotPresent
 
 service:
