@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-app
+  name: {{ .Chart.Name }}
   labels:
-    app: hello-app
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: hello-app
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: hello-app
+        app: {{ .Chart.Name }}
     spec:
       containers:
-        - name: hello-app
+        - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -24,25 +24,40 @@ spec:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: hello-app-config
+                  name: {{ .Chart.Name }}-config
                   key: DB_HOST
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: hello-app-config
+                  name: {{ .Chart.Name }}-config
                   key: DB_PORT
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: hello-app-config
+                  name: {{ .Chart.Name }}-config
                   key: DB_NAME
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: hello-app-secret
+                  name: {{ .Chart.Name }}-secret
                   key: DB_USER
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: hello-app-secret
+                  name: {{ .Chart.Name }}-secret
                   key: DB_PASSWORD
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          # Optional: wait for DB (add this if app starts before DB)
+          # Uncomment below if needed
+          # command: ["sh", "-c", "until nc -z {{ .Values.db.host }} {{ .Values.db.port }}; do echo waiting for db; sleep 2; done; node server.js"]
