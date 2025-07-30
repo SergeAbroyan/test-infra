@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 039612884386.dkr.ecr.us-east-1.amazonaws.com/hello-app
-  tag: latest
+  tag: v2
   pullPolicy: IfNotPresent
 
 service:
@@ -17,14 +17,17 @@ ingress:
     acme.cert-manager.io/http01-edit-in-place: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^(/.well-known/acme-challenge/.*)$ $1 break;
+
   hosts:
     - host: sergeabroyan.com
       paths:
         - path: /
           pathType: Prefix
+          backend:
+            service:
+              name: hello-app
+              port:
+                number: 80 
   tls:
     - hosts:
         - sergeabroyan.com
