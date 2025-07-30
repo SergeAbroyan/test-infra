@@ -29,7 +29,7 @@ ingress:
       secretName: tls-secret
 
 db:
-  host: my-postgresql.default.svc.cluster.local
+  host: "postgres.default.svc.cluster.local"
   port: "5432"
   name: "hellodb"
   user: "hellouser"
